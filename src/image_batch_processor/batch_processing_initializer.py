@@ -17,9 +17,9 @@ def main():
             '--multiplier',
             help="Specify the upscale multiplier."
                  "If set to None the default multiplicator of 4 will be set",
-            choices=[3, 4]
+            choices=[3, 4],
             type=int,
-            default=4
+            default=3
             )
     parser.add_argument(
             '-w',

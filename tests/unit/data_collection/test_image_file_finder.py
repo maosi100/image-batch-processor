@@ -29,7 +29,8 @@ class TestImageFileFinder(unittest.TestCase):
             return_value=self.fake_file_dir
                 ).start()
         self.mock_is_supported_image_file = mock.patch(
-            'image_batch_processor.data_collection.image_file_finder.ImageFileFinder._ImageFileFinder__is_supported_image_file',
+            'image_batch_processor.data_collection.image_file_finder.\
+                    ImageFileFinder._ImageFileFinder__is_supported_image_file',
             side_effect=[True, True, True, True, True, False, True]
                 ).start()
 
@@ -42,7 +43,7 @@ class TestImageFileFinder(unittest.TestCase):
         fake_output = self.image_file_finder.find(self.fake_start_dir)
 
         self.mock_abspath.assert_called_once_with(self.fake_start_dir)
-        self.mock_walk.assert_called_once_with(self.mock_abspath.return_value)
+        self.mock.walk.assert_called_once_with(self.mock_abspath.return_value)
         self.mock_is_supported_image_file.assert_has_calls([
             mock.call('file_1.png'),
             mock.call('file_2.png'),
