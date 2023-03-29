@@ -1,15 +1,13 @@
 import cv2
 from cv2 import dnn_superres
 
-sr = dnn_superres.DnnSuperResImpl_create()
+def image_upscaler(input_path, output_path, multiplier):
+    sr = dnn_superres.DnnSuperResImpl_create()
+    image = cv2.imread(input_path)
 
-image = cv2.imread('./testbild.png')
+    path = './upscaling_models/EDSR_x3.pb'
+    sr.readModel(path)
+    sr.setModel('edsr', multiplier)
 
-path = './EDSR_x4.pb'
-sr.readModel(path)
-
-sr.setModel('edsr', 4)
-
-result = sr.upsample(image)
-
-cv2.imwrite('./upscaled.png', result)
+    result = sr.upsample(image)
+    cv2.imwrite(output_path, result)
