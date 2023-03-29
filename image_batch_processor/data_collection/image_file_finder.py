@@ -17,6 +17,6 @@ class ImageFileFinder:
         return image_files
 
     def __is_supported_image_file(self, file_name: str) -> bool:
-        file_extension = os.path.splittext(file_name)[1]
+        file_extension = os.path.splitext(file_name)[1]
         
         return file_extension in SUPPORTED_FILE_EXTENSIONS
