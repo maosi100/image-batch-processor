@@ -1,9 +1,9 @@
 import cv2
 from cv2 import dnn_superres
 
-def image_upscaler(input_path, output_path, multiplier):
+def image_upscaler(image_path, output_path, multiplier):
     sr = dnn_superres.DnnSuperResImpl_create()
-    image = cv2.imread(input_path)
+    image = cv2.imread(image_path)
 
     path = '/image_batch_processor/image_processing/upscaling_models/EDSR_x3.pb'
 

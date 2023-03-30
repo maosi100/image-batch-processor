@@ -10,7 +10,7 @@ def main():
     
     for batch in ImageFileFinder().find(args.input):
         processor = ImageProcessor(batch, args.multiplier)
-        processor.upscale_images()
+        #processor.upscale_images()
         if args.watermark:
             processor.watermark_images()
             if args.preview:
