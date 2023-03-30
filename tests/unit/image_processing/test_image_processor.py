@@ -30,18 +30,12 @@ class TestImageProcessor(unittest.TestCase):
 
 
     @mock.patch('image_batch_processor.image_processing.image_processor.image_upscaler')
-    @mock.patch('image_batch_processor.image_processing.image_processor.os.path.join')
-    @mock.patch('image_batch_processor.image_processing.image_processor.ImageProcessor._ImageProcessor__create_output_directory')
-    def test_upscale_images(self, mock_create_output_directory, mock_join, mock_image_upscaler):
+    @mock.patch('image_batch_processor.image_processing.image_processor.ImageProcessor._create_output_directory')
+    def test_upscale_images(self, mock_create_output_directory, mock_image_upscaler):
         mock_create_output_directory.return_value = '/my/fake/dir/Upscaled_Images'
-        mock_join.side_effect = ['/my/fake/dir/Upscaled_Images/dir_1.png', '/my/fake/dir/Upscaled_Images/dir_2.png']
         
         self.fake_image_processor.upscale_images()
 
-        mock_join.assert_has_calls([
-            mock.call(mock_create_output_directory.return_value, 'dir_1.png'),
-            mock.call(mock_create_output_directory.return_value, 'dir_2.png')
-            ])
         mock_image_upscaler.assert_has_calls([
             mock.call('/my/fake/dir/file_x.png', '/my/fake/dir/Upscaled_Images/dir_1.png', self.fake_multiplier),
             mock.call('/my/fake/dir/file_y.png', '/my/fake/dir/Upscaled_Images/dir_2.png', self.fake_multiplier)
@@ -50,7 +44,7 @@ class TestImageProcessor(unittest.TestCase):
 
     @mock.patch('image_batch_processor.image_processing.image_processor.os.mkdir')
     def test_create_output_directory(self, mock_mkdir):
-        fake_output = self.fake_image_processor._ImageProcessor__create_output_directory(
+        fake_output = self.fake_image_processor._create_output_directory(
                 self.fake_image_batch, 'Upscaled_Images'
                 )
         
