@@ -1,5 +1,6 @@
 from image_batch_processor.image_processing.image_upscaler import image_upscaler
 from image_batch_processor.image_processing.image_watermarker import image_watermarker
+from image_batch_processor.image_processing.image_preview_creator import image_preview_creator
 import os
 
 class ImageProcessor:
@@ -9,25 +10,28 @@ class ImageProcessor:
         self.batch_name = self._create_batch_name(self.image_batch)
 
     def upscale_images(self) -> None:
-        output_directory = self._create_output_directory(self.image_batch, 'Upscaled_Images')
+        self.upscaled_output_dir = self._create_output_directory(self.image_batch, 'Upscaled_Images')
 
         for i, image_path in enumerate(self.image_batch, start=1):
             output_file_name = self._create_file_name(image_path, self.batch_name, i)
-            output_path = os.path.join(output_directory, output_file_name)
+            output_dir = os.path.join(self.upscaled_output_dir, output_file_name)
 
-            image_upscaler(image_path, output_path, self.multiplier)
+            image_upscaler(image_path, output_dir, self.multiplier)
 
     def watermark_images(self) -> None:
-        output_directory = self._create_output_directory(self.image_batch, 'Preview_Images')
+        self.preview_output_dir = self._create_output_directory(self.image_batch, 'Preview_Images')
 
         for i, image_path in enumerate(self.image_batch, start=1):
             output_file_name = self._create_file_name(image_path, self.batch_name, i)
-            output_path = os.path.join(output_directory, output_file_name)
+            output_dir = os.path.join(self.preview_output_dir, output_file_name)
 
-            image_watermarker(image_path, output_path)
+            image_watermarker(image_path, output_dir)
 
-    def create_preview_images(self) -> None:
-        pass
+    def create_preview_image(self) -> None:
+        # preview_label = create_preview_label(self.batch_name, len(self.image_batch))
+        
+        output_dir = f"{self.preview_output_dir}/{self.batch_name}_preview.png" 
+        image_preview_creator(self.image_batch, output_dir)
 
     @staticmethod
     def _create_file_name(image_path: str, batch_name: str, count: int) -> str:

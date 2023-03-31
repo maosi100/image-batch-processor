@@ -10,11 +10,11 @@ def main():
     
     for batch in ImageFileFinder().find(args.input):
         processor = ImageProcessor(batch, args.multiplier)
-        processor.upscale_images()
+        # processor.upscale_images()
         if args.watermark:
             processor.watermark_images()
             if args.preview:
-                processor.create_preview_images()
+                processor.create_preview_image()
 
 
     print("\n### PROCESSING SUCCESFULLY FINISHED! ###")
