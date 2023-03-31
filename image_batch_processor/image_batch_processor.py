@@ -1,9 +1,7 @@
-from image_batch_processor.image_processing.image_upscaler import image_upscaler
-from image_batch_processor.image_processing.image_watermarker import image_watermarker
-from image_batch_processor.image_processing.image_preview_creator import image_preview_creator
+from image_batch_processor.image_processing.image_modification import image_upscaler, image_watermarker, image_preview_creator
 import os
 
-class ImageProcessor:
+class ImageBatchProcessor:
     def __init__(self, image_batch: list[str], multiplier: int) -> None:
         self.image_batch = image_batch
         self.multiplier = multiplier
@@ -29,7 +27,6 @@ class ImageProcessor:
 
     def create_preview_image(self) -> None:
         # preview_label = create_preview_label(self.batch_name, len(self.image_batch))
-        
         output_dir = f"{self.preview_output_dir}/{self.batch_name}_preview.png" 
         image_preview_creator(self.image_batch, output_dir)
 
