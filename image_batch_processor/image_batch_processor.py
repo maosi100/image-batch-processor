@@ -1,4 +1,5 @@
 from image_batch_processor.image_processing.image_modification import image_upscaler, image_watermarker, image_preview_creator
+from image_batch_processor.image_processing.preview_label_creator import create_preview_label
 import os
 
 class ImageBatchProcessor:
@@ -12,23 +13,24 @@ class ImageBatchProcessor:
 
         for i, image_path in enumerate(self.image_batch, start=1):
             output_file_name = self._create_file_name(image_path, self.batch_name, i)
-            output_dir = os.path.join(self.upscaled_output_dir, output_file_name)
+            output_path = os.path.join(self.upscaled_output_dir, output_file_name)
 
-            image_upscaler(image_path, output_dir, self.multiplier)
+            image_upscaler(image_path, output_path, self.multiplier)
 
     def watermark_images(self) -> None:
         self.preview_output_dir = self._create_output_directory(self.image_batch, 'Preview_Images')
 
         for i, image_path in enumerate(self.image_batch, start=1):
             output_file_name = self._create_file_name(image_path, self.batch_name, i)
-            output_dir = os.path.join(self.preview_output_dir, output_file_name)
+            output_path = os.path.join(self.preview_output_dir, output_file_name)
 
-            image_watermarker(image_path, output_dir)
+            image_watermarker(image_path, output_path)
 
     def create_preview_image(self) -> None:
-        # preview_label = create_preview_label(self.batch_name, len(self.image_batch))
-        output_dir = f"{self.preview_output_dir}/{self.batch_name}_preview.png" 
-        image_preview_creator(self.image_batch, output_dir)
+        preview_label = create_preview_label(self.batch_name, len(self.image_batch), self.preview_output_dir)
+
+        output_path = f"{self.preview_output_dir}/{self.batch_name}_preview.png" 
+        image_preview_creator(self.image_batch, output_path, preview_label)
 
     @staticmethod
     def _create_file_name(image_path: str, batch_name: str, count: int) -> str:
