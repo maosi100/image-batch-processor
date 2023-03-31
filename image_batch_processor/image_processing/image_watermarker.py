@@ -2,7 +2,8 @@ import cv2
 
 def image_watermarker(image_path: str, output_path:str) -> None:
     image = cv2.imread(image_path)
-    watermark_image = cv2.imread('/Users/maximosipovs/Projekte/NiMa_Illustration/Generierte_Bilder/23-03-27_Water_Lillies_Monet_Watercolor/watermark.png')
+    path = './image_batch_processor/image_processing/utilities/watermark.png'
+    watermark_image = cv2.imread(path)
 
     h_image, w_image, _ = image.shape
     h_watermark_image, w_watermark_image, _ = watermark_image.shape
@@ -17,5 +18,6 @@ def image_watermarker(image_path: str, output_path:str) -> None:
 
     destination = image[top_y:bottom_y, left_x:right_x]
     output_image = cv2.addWeighted(destination,1, watermark_image, 0.5, 0)
+    image[top_y:bottom_y, left_x:right_x] = output_image
     
-    cv2.imwrite(output_path, output_image)
+    cv2.imwrite(output_path, image)
