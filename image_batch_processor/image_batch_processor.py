@@ -7,6 +7,8 @@ class ImageBatchProcessor:
         self.image_batch = image_batch
         self.multiplier = multiplier
         self.batch_name = self._create_batch_name(self.image_batch)
+        self.upscaled_output_dir = None
+        self.preview_output_dir = None
 
     def upscale_images(self) -> None:
         self.upscaled_output_dir = self._create_output_directory(self.image_batch, 'Upscaled_Images')
@@ -27,6 +29,9 @@ class ImageBatchProcessor:
             image_watermarker(image_path, output_path)
 
     def create_preview_image(self) -> None:
+        if not self.preview_output_dir:
+            self.preview_output_dir = self._create_output_directory(self.image_batch, 'Preview_Images')
+
         preview_label = create_preview_label(self.batch_name, len(self.image_batch), self.preview_output_dir)
 
         output_path = f"{self.preview_output_dir}/{self.batch_name}_preview.png" 
