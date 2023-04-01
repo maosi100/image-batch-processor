@@ -8,9 +8,14 @@ def main():
     print("### PROCESSING STARTED ###\n")
     print(f"### PARAMETERS: UPSCALE={args.multiplier}, WATERMARK={args.watermark}, PREVIEW={args.preview} ###\n")
     
-    for batch in ImageFileFinder().find(args.input):
+    image_batches = ImageFileFinder().find(args.input)
+    print(f"### PROCESSING TOTAL OF {len(image_batches)} BATCHES ###\n")
+
+    for i, batch in enumerate(image_batches, start=1):
+        print(f"### PROCESSING BATCH {i}/{len(image_batches)} ###\n")
+
         processor = ImageBatchProcessor(batch, args.multiplier)
-        # processor.upscale_images()
+        processor.upscale_images()
         if args.watermark == True:
             processor.watermark_images()
             if args.preview == True:
