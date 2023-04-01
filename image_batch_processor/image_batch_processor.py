@@ -45,7 +45,7 @@ class ImageBatchProcessor:
     @staticmethod
     def _create_batch_name(image_batch: str) -> str:
         root = os.path.split(image_batch[0])[0]
-        return root.split('/')[-1]
+        return root.replace('_', ' ').split('/')[-1]
     
     @staticmethod
     def _create_output_directory(image_batch: str, directory_name: str) -> str:
