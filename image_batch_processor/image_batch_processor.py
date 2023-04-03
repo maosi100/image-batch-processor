@@ -32,10 +32,10 @@ class ImageBatchProcessor:
         if not self.preview_output_dir:
             self.preview_output_dir = self._create_output_directory(self.image_batch, 'Preview_Images')
 
-        preview_label = create_preview_label(self.batch_name, len(self.image_batch), self.preview_output_dir)
+        # preview_label = create_preview_label(self.batch_name, len(self.image_batch), self.preview_output_dir)
 
         output_path = f"{self.preview_output_dir}/{self.batch_name}_preview.png" 
-        image_preview_creator(self.image_batch, output_path, preview_label)
+        image_preview_creator(self.image_batch, output_path)
 
     @staticmethod
     def _create_file_name(image_path: str, batch_name: str, count: int) -> str:
