@@ -6,7 +6,7 @@ def main():
     args = argument_parser()
 
     print("### PROCESSING STARTED ###\n")
-    print(f"### PARAMETERS: UPSCALE={args.multiplier}, WATERMARK={args.watermark}, PREVIEW={args.preview} ###\n")
+    print(f"### PARAMETERS: UPSCALE={args.multiplier}, WATERMARK={args.watermark}, PREVIEW={args.preview}, LABEL={args.label} ###\n")
     
     image_batches = ImageFileFinder().find(args.input)
     print(f"### PROCESSING TOTAL OF {len(image_batches)} BATCHES ###\n")
@@ -19,7 +19,7 @@ def main():
         if args.watermark == True:
             processor.watermark_images()
             if args.preview == True:
-                processor.create_preview_image()
+                processor.create_preview_image(args.label)
 
 
     print("\n### PROCESSING SUCCESFULLY FINISHED! ###")

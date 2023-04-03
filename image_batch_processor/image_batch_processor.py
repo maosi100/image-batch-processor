@@ -28,14 +28,16 @@ class ImageBatchProcessor:
 
             image_watermarker(image_path, output_path)
 
-    def create_preview_image(self) -> None:
+    def create_preview_image(self, label: str = None) -> None:
         if not self.preview_output_dir:
             self.preview_output_dir = self._create_output_directory(self.image_batch, 'Preview_Images')
-
-        # preview_label = create_preview_label(self.batch_name, len(self.image_batch), self.preview_output_dir)
+        
+        preview_label = None
+        if label:
+            preview_label = create_preview_label(self.batch_name, len(self.image_batch), self.preview_output_dir)
 
         output_path = f"{self.preview_output_dir}/{self.batch_name}_preview.png" 
-        image_preview_creator(self.image_batch, output_path)
+        image_preview_creator(self.image_batch, output_path, preview_label)
 
     @staticmethod
     def _create_file_name(image_path: str, batch_name: str, count: int) -> str:
