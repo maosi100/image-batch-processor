@@ -15,7 +15,7 @@ def main():
         print(f"### PROCESSING BATCH {i}/{len(image_batches)} ###\n")
 
         processor = ImageBatchProcessor(batch, args.multiplier)
-        # processor.upscale_images()
+        processor.upscale_images()
         if args.watermark == True:
             processor.watermark_images()
             if args.preview == True:

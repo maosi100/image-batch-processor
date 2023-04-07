@@ -48,6 +48,8 @@ def image_preview_creator(image_batch: str, output_dir: str, label: str = None) 
 
     for i, image in enumerate(image_batch):
         loaded_image = cv2.imread(image)
+        resized_image = cv2.resize(loaded_image, (570, 570))
+        loaded_image = resized_image
         
         if i < (len(image_batch) / 2):
             top_y = target_height * 0

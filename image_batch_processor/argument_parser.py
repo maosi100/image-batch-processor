@@ -37,6 +37,7 @@ def argument_parser():
             '-l',
             '--label',
             help="Specify if a label should created and added to the preview composition. "
-                 "(default = False)"
+                 "(default = False)",
+            default=False
             )
     return parser.parse_args()

@@ -1,5 +1,6 @@
-from image_batch_processor.image_processing.image_modification import image_upscaler, image_watermarker, image_preview_creator
+from image_batch_processor.image_processing.image_modification import image_upscaler, image_watermarker, image_preview_creator 
 from image_batch_processor.image_processing.preview_label_creator import create_preview_label
+import zipfile
 import os
 
 class ImageBatchProcessor:
@@ -18,6 +19,8 @@ class ImageBatchProcessor:
             output_path = os.path.join(self.upscaled_output_dir, output_file_name)
 
             image_upscaler(image_path, output_path, self.multiplier)
+
+        self._create_zip_files(self.upscaled_output_dir)
 
     def watermark_images(self) -> None:
         self.preview_output_dir = self._create_output_directory(self.image_batch, 'Preview_Images')
@@ -38,6 +41,19 @@ class ImageBatchProcessor:
 
         output_path = f"{self.preview_output_dir}/{self.batch_name}_preview.png" 
         image_preview_creator(self.image_batch, output_path, preview_label)
+    
+
+    def _create_zip_files(self, input_dir: str) -> None:
+        zip_file_name = input_dir + self.batch_name + ".zip"
+
+        zip_file = zipfile.ZipFile(zip_file_name, "w", zipfile.ZIP_DEFLATED)
+
+        for root, _, files in os.walk(input_dir):
+            for file in files:
+                file_path = os.path.join(root, file)
+                zip_file.write(file_path, os.path.relpath(file_path, input_dir))
+
+        zip_file.close()
 
     @staticmethod
     def _create_file_name(image_path: str, batch_name: str, count: int) -> str:
