@@ -31,7 +31,7 @@ class ImageBatchProcessor:
 
             image_watermarker(image_path, output_path)
 
-    def create_preview_image(self, label: str = None) -> None:
+    def create_preview_image(self, label: str = '') -> None:
         if not self.preview_output_dir:
             self.preview_output_dir = self._create_output_directory(self.image_batch, 'Preview_Images')
         
@@ -61,12 +61,12 @@ class ImageBatchProcessor:
         return f"{batch_name}_{count}{file_extension}"
     
     @staticmethod
-    def _create_batch_name(image_batch: str) -> str:
+    def _create_batch_name(image_batch: list[str]) -> str:
         root = os.path.split(image_batch[0])[0]
         return root.replace('_', ' ').split('/')[-1]
     
     @staticmethod
-    def _create_output_directory(image_batch: str, directory_name: str) -> str:
+    def _create_output_directory(image_batch: list[str], directory_name: str) -> str:
         root = os.path.split(image_batch[0])[0]
         os.mkdir(os.path.join(root, directory_name))
         return os.path.join(root, directory_name)

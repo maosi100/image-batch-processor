@@ -38,7 +38,7 @@ def image_watermarker(image_path: str, output_path:str) -> None:
     cv2.imwrite(output_path, image)
 
 
-def image_preview_creator(image_batch: str, output_dir: str, label: str = None) -> None:
+def image_preview_creator(image_batch: str, output_dir: str, label: str = "") -> None:
     output_format = {'width': 1140, 'height': 760}
 
     preview_image = 255 * np.ones(shape=[output_format['height'], output_format['width'], 3], dtype=np.uint8)
