@@ -32,7 +32,8 @@ class TestImageBatchProcessor(unittest.TestCase):
 
     @mock.patch('image_batch_processor.image_batch_processor.image_upscaler')
     @mock.patch('image_batch_processor.image_batch_processor.ImageBatchProcessor._create_output_directory')
-    def test_upscale_images(self, mock_create_output_directory, mock_image_upscaler):
+    @mock.patch('image_batch_processor.image_batch_processor.ImageBatchProcessor._create_zip_files')
+    def test_upscale_images(self, mock_create_zip_files, mock_create_output_directory, mock_image_upscaler):
         mock_create_output_directory.return_value = '/my/fake/dir/Upscaled_Images'
         
         self.fake_image_processor.upscale_images()
@@ -41,6 +42,7 @@ class TestImageBatchProcessor(unittest.TestCase):
             mock.call('/my/fake/dir/file_x.png', '/my/fake/dir/Upscaled_Images/dir_1.png', self.fake_multiplier),
             mock.call('/my/fake/dir/file_y.png', '/my/fake/dir/Upscaled_Images/dir_2.png', self.fake_multiplier)
             ])
+        mock_create_zip_files.assert_called_once_with(mock_create_output_directory.return_value)
 
 
     @mock.patch('image_batch_processor.image_batch_processor.image_watermarker')
@@ -63,7 +65,7 @@ class TestImageBatchProcessor(unittest.TestCase):
         mock_create_output_directory.return_value = '/my/fake/dir/Preview_Images'
         mock_create_preview_label.return_value='/my/fake/dir/label.png'
 
-        self.fake_image_processor.create_preview_image()
+        self.fake_image_processor.create_preview_image(True)
 
         mock_create_preview_label.assert_called_once_with(
                 self.fake_batch_name, len(self.fake_image_batch), '/my/fake/dir/Preview_Images')

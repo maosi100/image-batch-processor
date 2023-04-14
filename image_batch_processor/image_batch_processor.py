@@ -31,11 +31,11 @@ class ImageBatchProcessor:
 
             image_watermarker(image_path, output_path)
 
-    def create_preview_image(self, label: str = '') -> None:
+    def create_preview_image(self, label: bool) -> None:
         if not self.preview_output_dir:
             self.preview_output_dir = self._create_output_directory(self.image_batch, 'Preview_Images')
         
-        preview_label = None
+        preview_label = ''
         if label:
             preview_label = create_preview_label(self.batch_name, len(self.image_batch), self.preview_output_dir)
 
