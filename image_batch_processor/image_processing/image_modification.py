@@ -1,4 +1,4 @@
-import cv2
+from cv2 import cv2
 from cv2 import dnn_superres
 import numpy as np
 
